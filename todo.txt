@@ -1,7 +1,0 @@
-1> do a task system
-
-you need to store tasks with the name of the person
-
-
------------------------------------------------------
-add terminal autocompletion plugins

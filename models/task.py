@@ -1,8 +1,5 @@
 # task.py
 
-from models.user import User
-import time
-
 class Task:
 
     # Initializes the constructor
