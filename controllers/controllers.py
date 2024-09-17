@@ -1,5 +1,5 @@
 # controllers.py
-import config, uuid, time
+import config, uuid, time, json
 
 class Controller:
     
@@ -37,7 +37,7 @@ class Controller:
                 print(str(error_text))
         
     # Asks a yes or no question
-    def yes_or_no(self, prompt_text='No prompt text has been provided! (yes_or_no): ', error_text='no error text has been provided (yes_or_no): '):
+    def yes_or_no(self, prompt_text='No prompt text has been provided! (Yes or No): ', error_text='No error text has been provided (Yes or No): '):
         while True:
             user_input = str(input(str(prompt_text)))
             if user_input.strip().lower() in ['yes', 'y']:
@@ -48,11 +48,24 @@ class Controller:
                 print(str(error_text))
     
     # Checks if any character is a string based on an input
-    def validate_string(self, prompt_text='no prompt has been text provided', error_text='no error text has been provided'):
+    def validate_string(self, prompt_text='No prompt has been text provided! ', error_text='No error text has been provided! '):
         while True:
             user_input = str(input(prompt_text))
             if any(char.isdigit() for char in user_input):
                 print(str(error_text))
             else:
                 return user_input
+            
+    # Creates a .json file in the current directory.
+    def create_json(self, filename, content=""):
+        if filename.endswith(".json"): # Checks if "filename" ends with ".json" and removes it from the string.
+            filename = filename.replace(".json", "")
+        try: # Makes a file with the filename given as a .json.
+            with open(str(f"{filename}.json"), "w") as file:
+                json.dump(content, file, indent= 4)
+                self.debug_log(f".json file created: {filename}.json with the content {content} and indent= 4.")
+                return content
+        except Exception as error: # Raises an exception if something goes wrong making the file.
+            print(f"Error: an error has ocurred: {error}")
+            
             

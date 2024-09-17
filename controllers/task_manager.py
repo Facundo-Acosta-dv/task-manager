@@ -36,5 +36,5 @@ class TaskManager:
             if user.get("id") == str(user_id):
                 users[index].get("tasks").append(task.__dict__)
                 user_manager.save_users(users)
-                controller.debug_log(users)
+                controller.debug_log(f"added task: {task.__dict__}")
         
