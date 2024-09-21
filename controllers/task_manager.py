@@ -3,21 +3,18 @@
 from models.task import Task
 from controllers.controllers import Controller
 from controllers.user_manager import UserManager
+from utils import debug_log
 
 controller = Controller()
 user_manager = UserManager()
 
 class TaskManager:
 
-    # Initializes the constructor.
-    def __init__(self):
-        pass
-
     # Starts the process of creating a task.
     def create_task(self, user_id):
         if user_manager.user_exists(user_id): # Verifies if the ID given matchs with an user one.
             # Logic for adding a task.
-            controller.debug_log("Executing create_task()...")
+            debug_log("Executing create_task()...")
             task_title = str(input("Task title: "))
             task_description = str(input("Task description: "))
             time_created = controller.get_time()
@@ -36,5 +33,5 @@ class TaskManager:
             if user.get("id") == str(user_id):
                 users[index].get("tasks").append(task.__dict__)
                 user_manager.save_users(users)
-                controller.debug_log(f"added task: {task.__dict__}")
+                debug_log(f"added task: {task.__dict__}")
         

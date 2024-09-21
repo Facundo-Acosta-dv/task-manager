@@ -1,5 +1,5 @@
 # terminal.py
-import os, platform
+import os
 
 class Terminal:
     
@@ -9,11 +9,17 @@ class Terminal:
 
     # Clears console based on Operating System
     def clear_console(self):
-        if platform.system() == 'Windows':
-            os.system('cls')
-        else:
-            os.system('clear')
+        from utils import debug_log
+        import config
+        if config.ENABLE_CLEAR:
+            if self.system_info() == 'Windows':
+                debug_log(self)
+                clear = str('cls')
+            else:
+                clear = str('clear')
+            os.system(clear)
+            debug_log(f"Detected {self.system_info()} system, cleared terminal with '{clear}'")
     
-    # i dont know what the fuck is this shit
+    # Returns system info.
     def system_info(self):
-        print(platform.system())
+        import platform; return platform.system()

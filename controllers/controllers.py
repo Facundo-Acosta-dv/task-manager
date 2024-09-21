@@ -1,41 +1,56 @@
 # controllers.py
-import config, uuid, time, json
+import uuid, time, json
+from utils import debug_log 
 
 class Controller:
-    
-    # Initializes the constructor
-    def __init__(self) -> None:
-        pass
-    
-    # Enables debug if Global DEBUG = True
-    def debug_log(self, debug_message, capitalize=True):
-        if capitalize and isinstance(debug_message, str):
-            debug_message = debug_message.capitalize()
-        if config.DEBUG:
-            print(f'[DEBUG] {debug_message} [DEBUG]')
-    
-    # TO-DO func to return time
+
+    # Returns time as a string.
     def get_time(self):
         return time.strftime("%X")
 
+    # Returns date as a string.
     def get_date(self):
         return time.strftime("%d/%m/%y")
 
-    # Generates a new ID number
+    # Generates a UUID.
     def generate_id(self):
         new_id = str(uuid.uuid4())
-        self.debug_log(f"new id: {new_id}")
+        debug_log(f"new id: {new_id}")
         return new_id
 
-    # Checks if the input is an integer
-    def validate_integer(self, prompt_text='No prompt text has been given (validate_integer): ', error_text='No error text has been provided! (validate_integer): '):
+    # Checks if the input is an integer.
+    def validate_integer(self, prompt_text='No prompt text has been given (validate_integer): ', value_error_text="", clear_on_fail=False, header_text=""):
+        from views.terminal import Terminal
+
+        terminal = Terminal()
+        
         while True:
             try:
+                if header_text: print(header_text) # Prints header text
                 user_input = int(input(prompt_text))
                 return user_input
             except ValueError:
-                print(str(error_text))
-        
+                if clear_on_fail:
+                    terminal.clear_console()
+                if value_error_text:
+                    print(str(value_error_text))
+
+    # Validates integer based on range given.
+    def int_in_range(self, min, max, prompt_text=f"int_in_range({min}~{max}):", out_of_range_text="", value_error_text="", clear_on_fail=False, header_text=""):
+        from views.terminal import Terminal
+        terminal = Terminal()
+
+        while True:
+            user_input = self.validate_integer(prompt_text, value_error_text, clear_on_fail, header_text)
+
+            if user_input >= min and user_input <= max:
+                return user_input
+            else:
+                if clear_on_fail:
+                    terminal.clear_console() # Clears console if arg clear_on_fail is enabled. 
+                if out_of_range_text:
+                    print(str(out_of_range_text))
+
     # Asks a yes or no question
     def yes_or_no(self, prompt_text='No prompt text has been provided! (Yes or No): ', error_text='No error text has been provided (Yes or No): '):
         while True:
@@ -47,7 +62,7 @@ class Controller:
             else:
                 print(str(error_text))
     
-    # Checks if any character is a string based on an input
+    # Checks if any character is a string based on an input.
     def validate_string(self, prompt_text='No prompt has been text provided! ', error_text='No error text has been provided! '):
         while True:
             user_input = str(input(prompt_text))
@@ -63,9 +78,20 @@ class Controller:
         try: # Makes a file with the filename given as a .json.
             with open(str(f"{filename}.json"), "w") as file:
                 json.dump(content, file, indent= 4)
-                self.debug_log(f".json file created: {filename}.json with the content {content} and indent= 4.")
+                debug_log(f".json file created: {filename}.json with the content {content} and indent= 4.")
                 return content
         except Exception as error: # Raises an exception if something goes wrong making the file.
             print(f"Error: an error has ocurred: {error}")
+
+    # TO-DO Factorise func, Validates if a given input is out of range.
+    def menu_input(self, min, max, prompt_text="prompt_text_input_val", out_of_range_text="out of range", value_error_text="please, enter a valid number"):
+        from views.view import View
+        view = View()
+        header = view.main_menu_header()
+        return self.int_in_range(min, max, prompt_text, out_of_range_text, value_error_text, True, header)
+
+        
+        
+                    
             
             
