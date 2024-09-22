@@ -83,8 +83,8 @@ class Controller:
         except Exception as error: # Raises an exception if something goes wrong making the file.
             print(f"Error: an error has ocurred: {error}")
 
-    # TO-DO Factorise func, Validates if a given input is out of range.
-    def menu_input(self, min, max, prompt_text="prompt_text_input_val", out_of_range_text="out of range", value_error_text="please, enter a valid number"):
+    # Gives the menu options and returns a number based on input.
+    def menu_options(self, min, max, prompt_text="prompt_text_input_val", out_of_range_text="out of range", value_error_text="please, enter a valid number"):
         from views.view import View
         view = View()
         header = view.main_menu_header()

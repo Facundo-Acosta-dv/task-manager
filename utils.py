@@ -1,6 +1,7 @@
 # utils.py (common utilities module)
 
 # Enables debug if Global DEBUG = True.
+@staticmethod
 def debug_log(debug_message, capitalize=True):
     import config
     if capitalize and isinstance(debug_message, str):
