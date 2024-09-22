@@ -81,6 +81,7 @@ class UserManager:
     
     # Creates an user based on username and age inputs | TO-DO --> Validate that the username doesn't already exists.
     def create_user(self):
+        import time
         users_file = self.load_users()
         if users_file == False:
             debug_log("User refused to create 'users.json' file")
@@ -95,4 +96,5 @@ class UserManager:
             new_user = User(username, age, id, date, time)
             self.add_user(users_file, new_user)
             print(f'User "{username}" has been created successfully! ')
+            time.sleep(1)
         

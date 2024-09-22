@@ -3,6 +3,7 @@
 from controllers.controllers import Controller
 from controllers.user_manager import UserManager
 from controllers.task_manager import TaskManager
+from controllers.menu import Menu
 from views.terminal import Terminal
 from views.view import View
 import config
@@ -12,6 +13,7 @@ task_manager = TaskManager()
 terminal = Terminal()
 view = View()
 controller = Controller()
+menu = Menu()
 config.DEBUG = True # DELETE THIS AFTER FINISH SCRIPT.
 
 def main(): # WARNING: i'm just using "main()" for testing purposes and debugging atm, thanks for your understanding!
@@ -19,8 +21,8 @@ def main(): # WARNING: i'm just using "main()" for testing purposes and debuggin
     # TO-DO Rewrite task system
     # user_id = "6fa12d75-614e-4524-890a-0ec7cab4a826"
     # task_manager.create_task(user_id)
-
-    view.main_menu() #REFactorise main_menu int func.
+    while True:
+        menu.main_menu() #REFactorise main_menu int func.
     # controller.int_in_range(1,5)
     # Creating an user
     # controller.validate_int_range(1, 3)
